@@ -1,49 +1,93 @@
+:root {
+    --bg-color: #f0f0f0;
+    --text-color: #333;
+    --container-bg: #ffffff;
+    --btn-bg: #4CAF50;
+    --btn-hover: #45a049;
+    --btn-text: white;
+    --card-shadow: rgba(0, 0, 0, 0.1);
+}
+
+body.dark-mode {
+    --bg-color: #121212;
+    --text-color: #f0f0f0;
+    --container-bg: #1e1e1e;
+    --btn-bg: #388E3C;
+    --btn-hover: #2E7D32;
+    --card-shadow: rgba(0, 0, 0, 0.5);
+}
+
 body {
-    font-family: sans-serif;
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
     min-height: 100vh;
-    background-color: #f0f0f0;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     margin: 0;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 .container {
     text-align: center;
+    background-color: var(--container-bg);
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 10px 25px var(--card-shadow);
+    transition: background-color 0.3s, box-shadow 0.3s;
+    width: 90%;
+    max-width: 400px;
 }
 
 .numbers-container {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    margin-bottom: 20px;
-}
-
-lotto-ball {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 24px;
-    color: white;
-    font-weight: bold;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 30px;
+    min-height: 60px;
 }
 
 #generate-button {
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 12px 30px;
+    font-size: 18px;
+    font-weight: bold;
     cursor: pointer;
     border: none;
-    border-radius: 5px;
-    background-color: #4CAF50;
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.3s;
+    border-radius: 10px;
+    background-color: var(--btn-bg);
+    color: var(--btn-text);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s;
 }
 
 #generate-button:hover {
-    background-color: #45a049;
+    background-color: var(--btn-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+#generate-button:active {
+    transform: translateY(0);
+}
+
+.mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--container-bg);
+    border: 1px solid var(--text-color);
+    color: var(--text-color);
+    padding: 8px 16px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.3s;
+    box-shadow: 0 2px 5px var(--card-shadow);
+}
+
+.mode-toggle:hover {
+    opacity: 0.8;
 }

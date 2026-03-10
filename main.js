@@ -22,6 +22,11 @@ class LottoBall extends HTMLElement {
                     font-weight: bold;
                     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
                     background-color: ${color};
+                    animation: pop 0.3s ease-out;
+                }
+                @keyframes pop {
+                    0% { transform: scale(0); }
+                    100% { transform: scale(1); }
                 }
             </style>
             <div>${number}</div>
@@ -29,8 +34,11 @@ class LottoBall extends HTMLElement {
     }
 
     getColor(number) {
-        const colors = ['#f44336', '#e91e63', '#9c27b0', '#673ab7', '#3f51b5', '#2196f3', '#03a9f4', '#00bcd4', '#009688', '#4caf50', '#8bc34a', '#cddc39', '#ffeb3b', '#ffc107', '#ff9800', '#ff5722'];
-        return colors[Math.floor(number / 3) % colors.length];
+        if (number <= 10) return '#fbc02d'; // 노랑
+        if (number <= 20) return '#1976d2'; // 파랑
+        if (number <= 30) return '#d32f2f'; // 빨강
+        if (number <= 40) return '#757575'; // 회색
+        return '#388e3c'; // 초록
     }
 }
 
@@ -38,6 +46,20 @@ customElements.define('lotto-ball', LottoBall);
 
 const generateButton = document.getElementById('generate-button');
 const numbersContainer = document.getElementById('numbers-container');
+const modeToggle = document.getElementById('mode-toggle');
+
+// 다크모드 설정
+const savedMode = localStorage.getItem('theme');
+if (savedMode === 'dark') {
+    document.body.classList.add('dark-mode');
+    modeToggle.textContent = '라이트 모드';
+}
+
+modeToggle.addEventListener('click', () => {
+    const isDark = document.body.classList.toggle('dark-mode');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    modeToggle.textContent = isDark ? '라이트 모드' : '다크 모드';
+});
 
 generateButton.addEventListener('click', () => {
     numbersContainer.innerHTML = '';
@@ -49,9 +71,11 @@ generateButton.addEventListener('click', () => {
 
     const sortedNumbers = Array.from(numbers).sort((a, b) => a - b);
 
-    sortedNumbers.forEach(number => {
-        const lottoBall = document.createElement('lotto-ball');
-        lottoBall.setAttribute('number', number);
-        numbersContainer.appendChild(lottoBall);
+    sortedNumbers.forEach((number, index) => {
+        setTimeout(() => {
+            const lottoBall = document.createElement('lotto-ball');
+            lottoBall.setAttribute('number', number);
+            numbersContainer.appendChild(lottoBall);
+        }, index * 100);
     });
 });
