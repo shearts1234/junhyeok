@@ -226,4 +226,20 @@ h1 {
     margin-top: 40px;
     padding-top: 20px;
     border-top: 1px solid rgba(128, 128, 128, 0.2);
+    text-align: left;
 }
+
+.comments-title {
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    opacity: 0.7;
+}
+
+#cusdis_thread {
+    min-height: 200px;
+}
+
+/* Cusdis 내부 요소 스타일 조정을 위한 팁: 
+   Cusdis는 iframe 내부에 렌더링되므로 직접적인 CSS 제약이 있을 수 있지만, 
+   컨테이너의 여백과 폰트를 맞춤으로써 일체감을 줄 수 있습니다. */
