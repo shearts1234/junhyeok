@@ -139,7 +139,8 @@ h1 {
     color: #ff5252;
 }
 
-#rps-start-button {
+#rps-file-label {
+    display: inline-block;
     background: #4a2c2a;
     color: white;
     border: none;
@@ -151,21 +152,23 @@ h1 {
     transition: all 0.3s;
 }
 
-#rps-start-button:hover {
+#rps-file-label:hover {
     transform: scale(1.05);
+    background: #5d3a37;
 }
 
-.webcam-container {
+.rps-preview-container {
     display: flex;
     justify-content: center;
     margin-bottom: 15px;
 }
 
-.webcam-container canvas {
+#rps-preview-image {
+    max-width: 200px;
+    max-height: 200px;
     border-radius: 15px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    max-width: 100%;
-    height: auto !important;
+    object-fit: contain;
 }
 
 .label-container {

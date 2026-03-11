@@ -131,68 +131,67 @@ const apiKeyInput = document.getElementById('api-key');
 
 // --- 주먹 가위 테스트 로직 ---
 const RPS_URL = "https://teachablemachine.withgoogle.com/models/AJ02IUq_b/";
-let rpsModel, rpsWebcam, rpsLabelContainer, rpsMaxPredictions;
-const rpsStartButton = document.getElementById('rps-start-button');
-const rpsWebcamContainer = document.getElementById('webcam-container');
+let rpsModel, rpsMaxPredictions;
+const rpsFileInput = document.getElementById('rps-file-input');
+const rpsFileLabel = document.getElementById('rps-file-label');
+const rpsPreviewImage = document.getElementById('rps-preview-image');
 const rpsLabelSection = document.getElementById('label-container');
 
-async function initRPS() {
-    rpsStartButton.disabled = true;
-    rpsStartButton.textContent = '모델 로딩 중...';
-
+async function loadRPSModel() {
+    if (rpsModel) return;
+    rpsFileLabel.textContent = '모델 로딩 중...';
     const modelURL = RPS_URL + "model.json";
     const metadataURL = RPS_URL + "metadata.json";
-
     try {
         rpsModel = await tmImage.load(modelURL, metadataURL);
         rpsMaxPredictions = rpsModel.getTotalClasses();
-
-        const flip = true; 
-        rpsWebcam = new tmImage.Webcam(200, 200, flip); 
-        await rpsWebcam.setup(); 
-        await rpsWebcam.play();
-        
-        window.requestAnimationFrame(rpsLoop);
-
-        rpsWebcamContainer.appendChild(rpsWebcam.canvas);
-        for (let i = 0; i < rpsMaxPredictions; i++) {
-            const div = document.createElement("div");
-            div.className = 'label-item';
-            rpsLabelSection.appendChild(div);
-        }
-        
-        rpsStartButton.style.display = 'none';
+        rpsFileLabel.textContent = '이미지 업로드하기';
     } catch (error) {
-        console.error("RPS Initialization failed:", error);
-        rpsStartButton.disabled = false;
-        rpsStartButton.textContent = '카메라 시작하기 (오류 발생)';
+        console.error("RPS Model loading failed:", error);
+        rpsFileLabel.textContent = '모델 로드 실패';
     }
 }
 
-async function rpsLoop() {
-    rpsWebcam.update(); 
-    await rpsPredict();
-    window.requestAnimationFrame(rpsLoop);
-}
+rpsFileInput.addEventListener('change', async (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
 
-async function rpsPredict() {
-    const prediction = await rpsModel.predict(rpsWebcam.canvas);
+    await loadRPSModel();
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+        rpsPreviewImage.src = e.target.result;
+        rpsPreviewImage.style.display = 'block';
+        
+        // 이미지가 로드된 후 예측 실행
+        rpsPreviewImage.onload = async () => {
+            await rpsPredict(rpsPreviewImage);
+        };
+    };
+    reader.readAsDataURL(file);
+});
+
+async function rpsPredict(imageElement) {
+    const prediction = await rpsModel.predict(imageElement);
+    
+    // 이전 결과 초기화
+    rpsLabelSection.innerHTML = '';
+
     for (let i = 0; i < rpsMaxPredictions; i++) {
+        const div = document.createElement("div");
+        div.className = 'label-item';
         const classPrediction = `<span>${prediction[i].className}</span> <span>${(prediction[i].probability * 100).toFixed(0)}%</span>`;
-        rpsLabelSection.childNodes[i].innerHTML = classPrediction;
+        div.innerHTML = classPrediction;
         
         // 확률이 높을 때 강조
         if (prediction[i].probability > 0.8) {
-            rpsLabelSection.childNodes[i].style.color = '#ff5252';
-            rpsLabelSection.childNodes[i].style.borderColor = '#ff5252';
-        } else {
-            rpsLabelSection.childNodes[i].style.color = 'inherit';
-            rpsLabelSection.childNodes[i].style.borderColor = 'transparent';
+            div.style.color = '#ff5252';
+            div.style.borderColor = '#ff5252';
         }
+        
+        rpsLabelSection.appendChild(div);
     }
 }
-
-rpsStartButton.addEventListener('click', initRPS);
 
 async function generateFoodImage(menuName, apiKey) {
     if (!apiKey) return null;

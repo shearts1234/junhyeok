@@ -32,9 +32,14 @@
         <!-- 주먹/가위 테스트 섹션 -->
         <div class="rps-section">
             <div class="rps-title">✌️ 주먹 가위 테스트</div>
-            <p class="subtitle" style="margin-bottom: 15px;">나의 손 모양을 인공지능이 분석합니다</p>
-            <button id="rps-start-button">카메라 시작하기</button>
-            <div id="webcam-container" class="webcam-container"></div>
+            <p class="subtitle" style="margin-bottom: 15px;">이미지를 업로드하면 인공지능이 분석합니다</p>
+            
+            <input type="file" id="rps-file-input" accept="image/*" style="display: none;">
+            <label for="rps-file-input" id="rps-file-label">이미지 업로드하기</label>
+            
+            <div id="rps-preview-container" class="rps-preview-container">
+                <img id="rps-preview-image" src="" alt="미리보기" style="display: none;">
+            </div>
             <div id="label-container" class="label-container"></div>
         </div>
         
