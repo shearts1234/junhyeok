@@ -7,16 +7,16 @@ class MenuCard extends HTMLElement {
     connectedCallback() {
         const menu = this.getAttribute('menu');
         const category = this.getAttribute('category');
+        const imageUrl = this.getAttribute('image-url');
         const color = this.getCategoryStyles(category);
 
         this.shadowRoot.innerHTML = `
             <style>
                 :host {
-                    padding: 15px 25px;
-                    border-radius: 16px;
+                    padding: 0;
+                    border-radius: 20px;
                     display: flex;
                     flex-direction: column;
-                    justify-content: center;
                     align-items: center;
                     font-size: 24px;
                     color: white;
@@ -25,7 +25,39 @@ class MenuCard extends HTMLElement {
                     background: ${color.bg};
                     text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
                     animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-                    min-width: 120px;
+                    width: 100%;
+                    max-width: 300px;
+                    overflow: hidden;
+                }
+                .food-image-container {
+                    width: 100%;
+                    height: 200px;
+                    background: rgba(0,0,0,0.1);
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    position: relative;
+                }
+                .food-image {
+                    width: 100%;
+                    height: 100%;
+                    object-fit: cover;
+                    display: ${imageUrl ? 'block' : 'none'};
+                }
+                .loading-spinner {
+                    width: 30px;
+                    height: 30px;
+                    border: 3px solid rgba(255,255,255,0.3);
+                    border-radius: 50%;
+                    border-top-color: white;
+                    animation: spin 1s linear infinite;
+                    display: ${imageUrl ? 'none' : 'block'};
+                }
+                .info-container {
+                    padding: 20px;
+                    width: 100%;
+                    box-sizing: border-box;
+                    text-align: center;
                 }
                 .category {
                     font-size: 12px;
@@ -36,12 +68,21 @@ class MenuCard extends HTMLElement {
                     letter-spacing: 1px;
                 }
                 @keyframes popIn {
-                    0% { transform: scale(0); opacity: 0; }
+                    0% { transform: scale(0.9); opacity: 0; }
                     100% { transform: scale(1); opacity: 1; }
                 }
+                @keyframes spin {
+                    to { transform: rotate(360deg); }
+                }
             </style>
-            <div class="category">${category}</div>
-            <div class="menu-name">${menu}</div>
+            <div class="food-image-container">
+                <div class="loading-spinner"></div>
+                <img src="${imageUrl || ''}" class="food-image" alt="${menu}">
+            </div>
+            <div class="info-container">
+                <div class="category">${category}</div>
+                <div class="menu-name">${menu}</div>
+            </div>
         `;
     }
 
@@ -86,6 +127,35 @@ const generateButton = document.getElementById('generate-button');
 const numbersContainer = document.getElementById('numbers-container');
 const modeToggle = document.getElementById('mode-toggle');
 const historyList = document.getElementById('history-list');
+const apiKeyInput = document.getElementById('api-key');
+
+async function generateFoodImage(menuName, apiKey) {
+    if (!apiKey) return null;
+
+    // 나노바나나 (Gemini 3.1 Flash Image Preview) 모델 사용
+    const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3.1-flash-image-preview:generateContent?key=${apiKey}`;
+    const prompt = `A delicious high-quality professional food photography of ${menuName}, minimalist white background, cinematic lighting, 4k resolution`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{ parts: [{ text: prompt }] }]
+            })
+        });
+
+        const data = await response.json();
+        const part = data.candidates?.[0]?.content?.parts?.[0];
+
+        if (part?.inline_data) {
+            return `data:${part.inline_data.mime_type};base64,${part.inline_data.data}`;
+        }
+    } catch (error) {
+        console.error('Image generation failed:', error);
+    }
+    return null;
+}
 
 // 다크모드 설정
 const savedMode = localStorage.getItem('theme');
@@ -104,7 +174,7 @@ modeToggle.addEventListener('click', () => {
 
 let isGenerating = false;
 
-generateButton.addEventListener('click', () => {
+generateButton.addEventListener('click', async () => {
     if (isGenerating) return;
     isGenerating = true;
     generateButton.disabled = true;
@@ -115,7 +185,7 @@ generateButton.addEventListener('click', () => {
     // 무작위 셔플 효과를 위해 몇 번 반복 후 최종 메뉴 결정
     let count = 0;
     const maxCount = 10;
-    const interval = setInterval(() => {
+    const interval = setInterval(async () => {
         const tempMenu = menuList[Math.floor(Math.random() * menuList.length)];
         numbersContainer.innerHTML = `<div style="font-size: 24px; font-weight: 800; opacity: 0.5;">${tempMenu.name}</div>`;
         count++;
@@ -129,6 +199,27 @@ generateButton.addEventListener('click', () => {
             menuCard.setAttribute('menu', finalMenu.name);
             menuCard.setAttribute('category', finalMenu.category);
             numbersContainer.appendChild(menuCard);
+
+            // 이미지 생성 시작
+            const apiKey = apiKeyInput.value.trim();
+            if (apiKey) {
+                const imageUrl = await generateFoodImage(finalMenu.name, apiKey);
+                if (imageUrl) {
+                    menuCard.setAttribute('image-url', imageUrl);
+                    const img = menuCard.shadowRoot.querySelector('.food-image');
+                    const spinner = menuCard.shadowRoot.querySelector('.loading-spinner');
+                    if (img) img.style.display = 'block';
+                    if (spinner) spinner.style.display = 'none';
+                } else {
+                    // 이미지 생성 실패 시 로딩 스피너 제거
+                    const spinner = menuCard.shadowRoot.querySelector('.loading-spinner');
+                    if (spinner) spinner.style.display = 'none';
+                }
+            } else {
+                // API 키가 없으면 로딩 스피너 제거
+                const spinner = menuCard.shadowRoot.querySelector('.loading-spinner');
+                if (spinner) spinner.style.display = 'none';
+            }
 
             isGenerating = false;
             generateButton.disabled = false;

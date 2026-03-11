@@ -50,9 +50,42 @@ body {
 h1 {
     font-size: 28px;
     font-weight: 800;
-    margin-bottom: 40px;
+    margin-bottom: 10px;
     letter-spacing: -0.5px;
     color: #ff5252;
+}
+
+.subtitle {
+    font-size: 14px;
+    opacity: 0.6;
+    margin-bottom: 30px;
+}
+
+.api-config {
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.api-config input {
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid rgba(128, 128, 128, 0.2);
+    background: var(--history-bg);
+    color: var(--text-color);
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.3s;
+}
+
+.api-config input:focus {
+    border-color: #ff5252;
+}
+
+.api-config small {
+    font-size: 11px;
+    opacity: 0.5;
 }
 
 .numbers-container {
