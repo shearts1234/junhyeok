@@ -220,3 +220,10 @@ h1 {
 .contact-form button:hover {
     opacity: 0.8;
 }
+
+/* 댓글 섹션 */
+.comments-section {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(128, 128, 128, 0.2);
+}
