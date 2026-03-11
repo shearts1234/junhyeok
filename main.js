@@ -129,6 +129,71 @@ const modeToggle = document.getElementById('mode-toggle');
 const historyList = document.getElementById('history-list');
 const apiKeyInput = document.getElementById('api-key');
 
+// --- 주먹 가위 테스트 로직 ---
+const RPS_URL = "https://teachablemachine.withgoogle.com/models/AJ02IUq_b/";
+let rpsModel, rpsWebcam, rpsLabelContainer, rpsMaxPredictions;
+const rpsStartButton = document.getElementById('rps-start-button');
+const rpsWebcamContainer = document.getElementById('webcam-container');
+const rpsLabelSection = document.getElementById('label-container');
+
+async function initRPS() {
+    rpsStartButton.disabled = true;
+    rpsStartButton.textContent = '모델 로딩 중...';
+
+    const modelURL = RPS_URL + "model.json";
+    const metadataURL = RPS_URL + "metadata.json";
+
+    try {
+        rpsModel = await tmImage.load(modelURL, metadataURL);
+        rpsMaxPredictions = rpsModel.getTotalClasses();
+
+        const flip = true; 
+        rpsWebcam = new tmImage.Webcam(200, 200, flip); 
+        await rpsWebcam.setup(); 
+        await rpsWebcam.play();
+        
+        window.requestAnimationFrame(rpsLoop);
+
+        rpsWebcamContainer.appendChild(rpsWebcam.canvas);
+        for (let i = 0; i < rpsMaxPredictions; i++) {
+            const div = document.createElement("div");
+            div.className = 'label-item';
+            rpsLabelSection.appendChild(div);
+        }
+        
+        rpsStartButton.style.display = 'none';
+    } catch (error) {
+        console.error("RPS Initialization failed:", error);
+        rpsStartButton.disabled = false;
+        rpsStartButton.textContent = '카메라 시작하기 (오류 발생)';
+    }
+}
+
+async function rpsLoop() {
+    rpsWebcam.update(); 
+    await rpsPredict();
+    window.requestAnimationFrame(rpsLoop);
+}
+
+async function rpsPredict() {
+    const prediction = await rpsModel.predict(rpsWebcam.canvas);
+    for (let i = 0; i < rpsMaxPredictions; i++) {
+        const classPrediction = `<span>${prediction[i].className}</span> <span>${(prediction[i].probability * 100).toFixed(0)}%</span>`;
+        rpsLabelSection.childNodes[i].innerHTML = classPrediction;
+        
+        // 확률이 높을 때 강조
+        if (prediction[i].probability > 0.8) {
+            rpsLabelSection.childNodes[i].style.color = '#ff5252';
+            rpsLabelSection.childNodes[i].style.borderColor = '#ff5252';
+        } else {
+            rpsLabelSection.childNodes[i].style.color = 'inherit';
+            rpsLabelSection.childNodes[i].style.borderColor = 'transparent';
+        }
+    }
+}
+
+rpsStartButton.addEventListener('click', initRPS);
+
 async function generateFoodImage(menuName, apiKey) {
     if (!apiKey) return null;
 

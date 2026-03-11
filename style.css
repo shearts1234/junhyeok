@@ -122,6 +122,74 @@ h1 {
     transform: translateY(-1px);
 }
 
+/* 주먹/가위 테스트 섹션 */
+.rps-section {
+    margin-top: 40px;
+    padding: 30px 20px;
+    border: 2px dashed rgba(255, 82, 82, 0.2);
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.3);
+    margin-bottom: 30px;
+}
+
+.rps-title {
+    font-size: 18px;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: #ff5252;
+}
+
+#rps-start-button {
+    background: #4a2c2a;
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 15px;
+    transition: all 0.3s;
+}
+
+#rps-start-button:hover {
+    transform: scale(1.05);
+}
+
+.webcam-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.webcam-container canvas {
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    max-width: 100%;
+    height: auto !important;
+}
+
+.label-container {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.label-item {
+    background: var(--history-bg);
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    width: 100%;
+    max-width: 200px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
 /* 히스토리 섹션 */
 .history-section {
     margin-top: 20px;
