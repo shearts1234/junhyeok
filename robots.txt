@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /
+Sitemap: https://shearts1234.github.io/junhyeok/sitemap.xml
+
+User-agent: Yeti
+Allow: /

@@ -19,7 +19,44 @@
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🍽️ 오늘 뭐 먹지? | 저녁 메뉴 추천</title>
+    <title>🍽️ 오늘 뭐 먹지? | 저녁 메뉴 추천 & AI 음식 이미지</title>
+    <meta name="description" content="오늘 저녁 메뉴가 고민되시나요? AI가 추천해주는 맛있는 메뉴와 Gemini 3.1이 그려주는 고퀄리티 음식 이미지를 확인해보세요. 결정 장애 해결을 위한 최고의 랜덤 메뉴 추천 서비스.">
+    <meta name="keywords" content="오늘뭐먹지, 저녁메뉴추천, 점심메뉴추천, 메뉴결정, 랜덤메뉴, AI음식, Gemini, 음식추천, 식사추천">
+    <link rel="canonical" href="https://shearts1234.github.io/junhyeok/">
+    
+    <!-- Open Graph / Facebook / KakaoTalk -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://shearts1234.github.io/junhyeok/">
+    <meta property="og:title" content="🍽️ 오늘 뭐 먹지? | 저녁 메뉴 추천">
+    <meta property="og:description" content="오늘 저녁 메뉴가 고민되시나요? AI가 추천해주는 맛있는 메뉴와 Gemini 3.1이 그려주는 음식 이미지를 확인해보세요.">
+    <meta property="og:image" content="https://shearts1234.github.io/junhyeok/favicon.ico">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://shearts1234.github.io/junhyeok/">
+    <meta property="twitter:title" content="🍽️ 오늘 뭐 먹지? | 저녁 메뉴 추천">
+    <meta property="twitter:description" content="오늘 저녁 메뉴가 고민되시나요? AI가 추천해주는 맛있는 메뉴와 Gemini 3.1이 그려주는 음식 이미지를 확인해보세요.">
+    <meta property="twitter:image" content="https://shearts1234.github.io/junhyeok/favicon.ico">
+
+    <!-- Naver Search Advisor Verification (Placeholder) -->
+    <meta name="naver-site-verification" content="your_verification_code_here">
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "오늘 뭐 먹지?",
+      "url": "https://shearts1234.github.io/junhyeok/",
+      "description": "오늘 저녁 메뉴가 고민되시나요? AI가 추천해주는 맛있는 메뉴와 Gemini 3.1이 그려주는 고퀄리티 음식 이미지를 확인해보세요.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://shearts1234.github.io/junhyeok/?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+    </script>
+
     <link rel="stylesheet" href="style.css">
     <!-- Teachable Machine 모델을 위한 TensorFlow.js 로드 -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js"></script>
@@ -32,20 +69,22 @@
      crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <a href="#" class="nav-logo">오늘 뭐 먹지?</a>
-            <ul class="nav-menu">
-                <li><a href="#home">홈</a></li>
-                <li><a href="#about">소개</a></li>
-                <li><a href="#features">기능</a></li>
-                <li><a href="privacy.html">개인정보처리방침</a></li>
-            </ul>
-            <button id="mode-toggle" class="mode-toggle">🌙 다크 모드</button>
-        </div>
-    </nav>
+    <header>
+        <nav class="navbar">
+            <div class="nav-container">
+                <a href="#" class="nav-logo">오늘 뭐 먹지?</a>
+                <ul class="nav-menu">
+                    <li><a href="#home">홈</a></li>
+                    <li><a href="#about">소개</a></li>
+                    <li><a href="#features">기능</a></li>
+                    <li><a href="privacy.html">개인정보처리방침</a></li>
+                </ul>
+                <button id="mode-toggle" class="mode-toggle">🌙 다크 모드</button>
+            </div>
+        </nav>
+    </header>
     
-    <div class="container" id="home">
+    <main class="container" id="home">
         <h1>오늘의 저녁 메뉴는?</h1>
         <p class="subtitle">나노바나나(Gemini 3.1)가 이미지를 그려줍니다</p>
         
