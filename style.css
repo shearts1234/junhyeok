@@ -427,6 +427,67 @@ h1 {
     min-height: 200px;
 }
 
+/* SNS 공유 섹션 */
+.share-section {
+    margin-top: 40px;
+    padding: 30px 20px;
+    background: var(--container-bg);
+    border-radius: 24px;
+    border: 1px solid rgba(128, 128, 128, 0.1);
+    text-align: center;
+}
+
+.share-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+    color: var(--text-color);
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.share-btn {
+    padding: 12px 20px;
+    border-radius: 12px;
+    border: none;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+}
+
+.share-btn:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.share-btn.kakao {
+    background-color: #FEE500;
+    color: #3C1E1E;
+}
+
+.share-btn.twitter {
+    background-color: #000000;
+}
+
+.share-btn.facebook {
+    background-color: #1877F2;
+}
+
+.share-btn.link-copy {
+    background-color: #4a2c2a;
+}
+
 /* Footer */
 .site-footer {
     width: 100%;

@@ -194,6 +194,18 @@
             </div>
             <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
         </div>
+
+        <!-- SNS 공유 섹션 (바이럴 최적화) -->
+        <section class="share-section">
+            <h2 class="share-title">📢 친구에게 이 서비스 추천하기</h2>
+            <p class="subtitle">오늘 메뉴 고민하는 친구에게 공유해보세요!</p>
+            <div class="share-buttons">
+                <button id="share-kakao" class="share-btn kakao">카카오톡</button>
+                <button id="share-twitter" class="share-btn twitter">트위터</button>
+                <button id="share-facebook" class="share-btn facebook">페이스북</button>
+                <button id="share-link" class="share-btn link-copy">링크 복사</button>
+            </div>
+        </section>
     </main>
 
     <footer class="site-footer">
@@ -201,6 +213,8 @@
         <p><a href="privacy.html">개인정보처리방침</a> | <a href="mailto:contact@example.com">문의하기</a></p>
     </footer>
 
+    <!-- SNS 공유를 위한 SDK 로드 -->
+    <script src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js" integrity="sha384-lLeS4Lq7679N9ZbgpYm+P9E90KqC+59B8r7O6B38" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js" defer></script>
     <script type="text/javascript">

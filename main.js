@@ -1,3 +1,62 @@
+// --- SNS 공유 로직 ---
+const KAKAO_JS_KEY = '454807469a4869c69345094d4853039d'; // 예시 키 (사용자의 실제 키로 교체 권장)
+
+if (window.Kakao && !window.Kakao.isInitialized()) {
+    try {
+        window.Kakao.init(KAKAO_JS_KEY);
+    } catch (e) {
+        console.error('Kakao SDK initialization failed:', e);
+    }
+}
+
+document.getElementById('share-kakao')?.addEventListener('click', () => {
+    if (!window.Kakao || !window.Kakao.isInitialized()) {
+        alert('카카오톡 공유를 준비 중입니다. 잠시 후 다시 시도해주세요.');
+        return;
+    }
+    window.Kakao.Share.sendDefault({
+        objectType: 'feed',
+        content: {
+            title: '🍽️ 오늘 뭐 먹지? | AI 메뉴 추천',
+            description: '결정 장애 해결! AI가 추천하는 메뉴와 실시간 음식 이미지를 확인하세요.',
+            imageUrl: 'https://shearts1234.github.io/junhyeok/favicon.ico',
+            link: {
+                mobileWebUrl: 'https://shearts1234.github.io/junhyeok/',
+                webUrl: 'https://shearts1234.github.io/junhyeok/',
+            },
+        },
+        buttons: [
+            {
+                title: '메뉴 추천받기',
+                link: {
+                    mobileWebUrl: 'https://shearts1234.github.io/junhyeok/',
+                    webUrl: 'https://shearts1234.github.io/junhyeok/',
+                },
+            },
+        ],
+    });
+});
+
+document.getElementById('share-twitter')?.addEventListener('click', () => {
+    const text = '오늘 점심·저녁 메뉴 고민되시나요? AI가 추천해주는 "오늘 뭐 먹지?"에서 해결해보세요! #오늘뭐먹지 #메뉴추천 #AI';
+    const url = 'https://shearts1234.github.io/junhyeok/';
+    window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`, '_blank');
+});
+
+document.getElementById('share-facebook')?.addEventListener('click', () => {
+    const url = 'https://shearts1234.github.io/junhyeok/';
+    window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`, '_blank');
+});
+
+document.getElementById('share-link')?.addEventListener('click', () => {
+    const url = 'https://shearts1234.github.io/junhyeok/';
+    navigator.clipboard.writeText(url).then(() => {
+        alert('링크가 복사되었습니다!');
+    }).catch(err => {
+        console.error('링크 복사 실패:', err);
+    });
+});
+
 class MenuCard extends HTMLElement {
     constructor() {
         super();
