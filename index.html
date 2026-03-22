@@ -35,24 +35,55 @@
     <meta name="google-site-verification" content="DJ6mi-JhYVmyXALNCEzyje7cyoXHuUu6iJH3K373xHA" />
     <meta name="naver-site-verification" content="your_verification_code_here">
 
-    <!-- Schema.org Structured Data -->
+    <!-- Schema.org Structured Data (GEO Optimized) -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebSite",
-      "name": "오늘 뭐 먹지?",
-      "url": "https://shearts1234.github.io/junhyeok/",
-      "description": "결정 장애 해결을 위한 최고의 랜덤 메뉴 추천 서비스.",
-      "potentialAction": {
-        "@type": "SearchAction",
-        "target": "https://shearts1234.github.io/junhyeok/?q={search_term_string}",
-        "query-input": "required name=search_term_string"
+    [
+      {
+        "@context": "https://schema.org",
+        "@type": "WebSite",
+        "name": "오늘 뭐 먹지?",
+        "url": "https://shearts1234.github.io/junhyeok/",
+        "description": "결정 장애 해결을 위한 최고의 랜덤 메뉴 추천 서비스.",
+        "potentialAction": {
+          "@type": "SearchAction",
+          "target": "https://shearts1234.github.io/junhyeok/?q={search_term_string}",
+          "query-input": "required name=search_term_string"
+        }
+      },
+      {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        "mainEntity": [
+          {
+            "@type": "Question",
+            "name": "오늘 뭐 먹지 서비스는 어떤 기능이 있나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "한식, 중식, 일식, 양식 등 다양한 카테고리의 메뉴 중 하나를 랜덤으로 추천해주며, 구글의 최신 AI 모델인 Gemini 3.1을 사용하여 해당 메뉴의 고퀄리티 이미지를 실시간으로 생성해 보여줍니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "AI 음식 이미지 생성 기능을 사용하려면 어떻게 해야 하나요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "메인 화면의 API 설정 칸에 본인의 Gemini API Key를 입력하면, 메뉴 추천과 동시에 해당 메뉴의 먹음직스러운 이미지가 AI를 통해 즉석에서 생성됩니다."
+            }
+          },
+          {
+            "@type": "Question",
+            "name": "주먹 가위 테스트 기능은 무엇인가요?",
+            "acceptedAnswer": {
+              "@type": "Answer",
+              "text": "사용자가 주먹, 가위, 보 이미지를 업로드하면 인공지능(Teachable Machine)이 해당 이미지를 분석하여 무엇인지 판별해주는 재미 요소 기반의 AI 테스트 기능입니다."
+            }
+          }
+        ]
       }
-    }
+    ]
     </script>
 
     <link rel="stylesheet" href="style.css">
-    <!-- Pretendard 폰트 불러오기 (최적화를 위해 Preload 권장되나 현재 방식 유지) -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
     <meta name="google-adsense-account" content="ca-pub-8458281925391155">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -67,7 +98,7 @@
                 <ul class="nav-menu">
                     <li><a href="#home">홈</a></li>
                     <li><a href="#about">소개</a></li>
-                    <li><a href="#features">기능</a></li>
+                    <li><a href="#faq">자주 묻는 질문</a></li>
                     <li><a href="privacy.html">개인정보처리방침</a></li>
                 </ul>
                 <button id="mode-toggle" class="mode-toggle">🌙 다크 모드</button>
@@ -76,24 +107,27 @@
     </header>
     
     <main class="container" id="home">
-        <h1>오늘의 점심·저녁 메뉴 추천은?</h1>
-        <p class="subtitle">결정 장애 해결사! Gemini 3.1 AI가 고퀄리티 메뉴 이미지를 생성합니다.</p>
-        
-        <div class="api-config">
-            <input type="password" id="api-key" placeholder="Gemini API Key를 입력하세요">
-            <small>API 키를 입력하면 AI 음식 이미지가 실시간 생성됩니다.</small>
-        </div>
+        <article>
+            <h1>오늘의 점심·저녁 메뉴 추천은?</h1>
+            <p class="subtitle">결정 장애 해결사! Gemini 3.1 AI가 고퀄리티 메뉴 이미지를 즉석에서 그려줍니다.</p>
+            <p style="font-size: 0.8rem; opacity: 0.6; margin-top: -20px; margin-bottom: 20px;">최종 업데이트: 2026년 3월 22일 | 작성자: 오늘 뭐 먹지? 팀</p>
+            
+            <div class="api-config">
+                <input type="password" id="api-key" placeholder="Gemini API Key를 입력하세요">
+                <small>API 키를 입력하면 AI 음식 이미지가 실시간 생성됩니다.</small>
+            </div>
 
-        <div id="numbers-container" class="numbers-container">
-            <!-- 메뉴가 여기에 생성됩니다 -->
-        </div>
-        
-        <button id="generate-button">오늘의 메뉴 추천받기</button>
+            <div id="numbers-container" class="numbers-container">
+                <!-- 메뉴가 여기에 생성됩니다 -->
+            </div>
+            
+            <button id="generate-button">오늘의 메뉴 추천받기</button>
+        </article>
 
         <!-- 주먹/가위 테스트 섹션 -->
-        <div class="rps-section">
-            <div class="rps-title">✌️ 주먹 가위 AI 테스트</div>
-            <p class="subtitle" style="margin-bottom: 15px;">이미지를 업로드하면 인공지능이 즉시 분석합니다</p>
+        <section class="rps-section">
+            <h2 class="rps-title">✌️ 주먹 가위 AI 테스트: 어떻게 분석하나요?</h2>
+            <p class="subtitle" style="margin-bottom: 15px;">이미지를 업로드하면 Teachable Machine 인공지능이 실시간으로 이미지를 분석하여 결과를 알려드립니다.</p>
             
             <input type="file" id="rps-file-input" accept="image/*" style="display: none;">
             <label for="rps-file-input" id="rps-file-label">이미지 분석 시작하기</label>
@@ -102,38 +136,54 @@
                 <img id="rps-preview-image" src="" alt="분석 이미지 미리보기" style="display: none;">
             </div>
             <div id="label-container" class="label-container"></div>
-        </div>
+        </section>
         
-        <div class="history-section">
-            <div class="history-title">최근 추천 받은 메뉴 기록</div>
+        <section class="history-section">
+            <h2 class="history-title">최근 추천 받은 메뉴 기록 확인하기</h2>
             <div id="history-list" class="history-list">
                 <!-- 기록이 여기에 추가됩니다 -->
             </div>
-        </div>
+        </section>
 
         <section id="about" class="content-section">
-            <h2>메뉴 결정 장애를 해결하는 '오늘 뭐 먹지?'</h2>
-            <p>'오늘 뭐 먹지?'는 매일 반복되는 식사 메뉴 고민(결정 장애)을 해결해 드리는 인공지능 기반 메뉴 추천 서비스입니다. 한식, 중식, 일식, 양식 등 수많은 인기 메뉴 중 당신의 입맛을 사로잡을 최고의 메뉴를 제안합니다.</p>
+            <h2>메뉴 결정 장애를 해결하는 '오늘 뭐 먹지?' 서비스 소개</h2>
+            <p>'오늘 뭐 먹지?'는 매일 반복되는 식사 메뉴 고민(결정 장애)을 해결해 드리는 인공지능 기반 메뉴 추천 서비스입니다. 직장인 점심, 가족 저녁 식사 등 다양한 상황에서 <strong>100가지 이상의 인기 메뉴</strong> 중 당신의 입맛을 사로잡을 최고의 한 끼를 제안합니다.</p>
             
-            <h3>주요 추천 기능</h3>
+            <h3>주요 추천 기능 상세</h3>
             <ul class="feature-list">
-                <li><strong>스마트 랜덤 메뉴 추천:</strong> 수십 가지의 검증된 맛집 메뉴 중 하나를 무작위로 선정하여 고민 시간을 줄여드립니다.</li>
-                <li><strong>고퀄리티 AI 이미지 생성:</strong> 구글의 최신 모델인 Gemini 3.1을 사용하여 추천된 메뉴의 이미지를 실시간으로 그려줍니다.</li>
-                <li><strong>개인화 추천 엔진:</strong> (준비 중) 사용자 식습관 데이터를 분석하여 더욱 정교한 점심·저녁 메뉴를 제안할 예정입니다.</li>
+                <li><strong>스마트 랜덤 메뉴 추천:</strong> 한식, 중식, 일식, 양식, 분식 등 카테고리별 검증된 메뉴를 무작위로 선정하여 선택의 고통을 덜어드립니다.</li>
+                <li><strong>고퀄리티 AI 이미지 실시간 생성:</strong> 구글의 최신 모델인 Gemini 3.1을 연동하여, 추천된 메뉴의 이미지를 텍스트가 아닌 시각적인 그림으로 즉시 보여줍니다.</li>
+                <li><strong>간편한 사용자 경험:</strong> 복잡한 설정 없이 버튼 하나로 오늘의 메뉴를 추천받을 수 있습니다.</li>
             </ul>
         </section>
 
+        <section id="faq" class="content-section">
+            <h2>자주 묻는 질문 (FAQ)</h2>
+            <div class="faq-item">
+                <h3>Q. 오늘 뭐 먹지 서비스는 무료인가요?</h3>
+                <p>네, 기본적인 메뉴 추천 기능은 누구나 무료로 이용할 수 있습니다. 다만, AI 이미지 생성 기능을 사용하려면 본인의 Gemini API Key가 필요합니다.</p>
+            </div>
+            <div class="faq-item">
+                <h3>Q. 추천되는 메뉴의 종류는 얼마나 되나요?</h3>
+                <p>현재 약 100여 가지의 대중적인 메뉴 데이터베이스를 보유하고 있으며, 지속적으로 업데이트하고 있습니다.</p>
+            </div>
+            <div class="faq-item" style="margin-bottom: 30px;">
+                <h3>Q. 개인정보(API 키)는 안전하게 보호되나요?</h3>
+                <p>입력하신 API 키는 서버로 전송되지 않고 사용자의 브라우저 로컬 스토리지에만 안전하게 저장됩니다. 안심하고 사용하셔도 됩니다.</p>
+            </div>
+        </section>
+
         <div class="contact-section">
-            <div class="contact-title">🤝 광고 및 제휴 문의</div>
+            <h2 class="contact-title">🤝 광고 및 제휴 문의 (비즈니스 문의)</h2>
             <form action="https://formspree.io/f/xwvrvgdn" method="POST" class="contact-form">
                 <input type="email" name="email" placeholder="답변 받으실 이메일" required>
-                <textarea name="message" placeholder="문의하실 내용을 상세히 적어주세요" required></textarea>
-                <button type="submit">문의 메일 보내기</button>
+                <textarea name="message" placeholder="광고 게재나 서비스 제휴 등 문의하실 내용을 상세히 적어주세요" required></textarea>
+                <button type="submit">비즈니스 문의 메일 보내기</button>
             </form>
         </div>
 
         <div class="comments-section">
-            <div class="comments-title">💬 커뮤니티 자유 게시판</div>
+            <h2 class="comments-title">💬 커뮤니티 자유 게시판</h2>
             <div id="cusdis_thread"
                 data-host="https://cusdis.com"
                 data-app-id="69e25d2d-556b-4e6f-96a8-6f68e64c18f1"
@@ -151,7 +201,6 @@
         <p><a href="privacy.html">개인정보처리방침</a> | <a href="mailto:contact@example.com">문의하기</a></p>
     </footer>
 
-    <!-- Render-blocking 리소스를 하단으로 이동 (성능 최적화) -->
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest/dist/tf.min.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/@teachablemachine/image@latest/dist/teachablemachine-image.min.js" defer></script>
     <script type="text/javascript">
